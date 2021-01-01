@@ -13,7 +13,7 @@ class User extends React.Component{
     componentDidMount(){
          Axios({
                 method:'GET',
-                url:'http://localhost:8000/student/get-user',
+                url:'http://localhost:8000/teacher/get-user',
                 withCredentials:true
             }).then((res)=>{
                 console.log(res);

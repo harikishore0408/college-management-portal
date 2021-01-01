@@ -3,40 +3,58 @@ import Axios from 'axios';
 
 
 class TeacherDashboard extends React.Component{
+    
     constructor(){
         super();
         this.state = {
-            list:[{}]
-
+            topic:'',
         }
+    }
+    
+    setTopic = (e) =>{
+        this.setState({
+            topic:e.target.value
+        });
+    }
+
+    addTopic = (e) =>{
+        Axios({
+            method:"POST",
+            url:`http://localhost:8000/teacher/add-topic/${this.state.topic}`,
+            withCredentials:true
+        })
+        .then((res)=>{
+            console.log(res.data);
+            this.props.updateCourse();
+        }).catch((error)=>{console.log(error)});
+        
     }
 
     componentDidMount(){
-        Axios({
-            method:'GET',
-            url:'http://localhost:8000/teacher/assignment-list',
-            withCredentials:true
-        }).then(
-            (res)=>{
-                console.log(res.data);
-                this.setState({list:res.data})
-            })
-        .catch((err)=>{console.log(err)});
-    }
 
+        
+    }
 
     
     render(){
+
+        console.log('-------',this.props,'-----------')
         return(
+            
             <div className='teacher-dashboard'>
-                hello
-               {this.state.list.map((item,index)=> (
-                   <div className="assignmnet-container" key={index}>
-                       <h6>Assignment</h6>
-                       <p>{item.content}</p>
-                       <small>{item.deadline}</small>
+                
+                <h2>Dashboard</h2>
+
+                {this.props.course.subject}
+                <form>
+                    <input type='text' onChange={this.setTopic} name='topic' placeholder='Create topic' />
+                    <input type='button' onClick={this.addTopic} value='add topic'/>
+                </form>
+               {this.props.course.topics ? this.props.course.topics.map((item,index)=> (
+                   <div className="topic-container" key={index}>
+                       <p>{item}</p>
                    </div>
-               ))}
+               )): ''}
             </div>
         );
     }

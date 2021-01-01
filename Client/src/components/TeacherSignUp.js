@@ -12,19 +12,38 @@ class TeacherSignUp extends React.Component{
             confirm_Password:''
         }
     }
+
+    textToUpperCase = (e) => {
+         //To convert first letter of everyword to Upper Case
+         let str = e.target.value.toLowerCase()
+         .split(' ')
+         .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+         .join(' ');
+
+         return str;
+ 
+    }
+
     setEmail= (e) =>{
         this.setState({
             email:e.target.value
         });
     }
     setName = (e) =>{
+
+        let str = this.textToUpperCase(e);
+
         this.setState({
-            name:e.target.value
+            name:str
         });
     }
     setSubject = (e) =>{
+
+       
+        let str = this.textToUpperCase(e);
+
         this.setState({
-            subject:e.target.value
+            subject:str
         });
     }
 
@@ -68,8 +87,6 @@ class TeacherSignUp extends React.Component{
                     
                     <input type='text' name='name' placeholder='Enter ur name' onChange={this.setName} required/>
                     <input type='email' name='email' placeholder='Enter email' onChange={this.setEmail}required/>
-                    {/* <input type='hidden' name='hello' value='' required /> */}
-                    {/* <input type='text' name='kuch bhi' placeholder='Enter kuch bhi' required /> */}
                     <input type='text' name='subject' placeholder='Subject you teach' onChange={this.setSubject} required/>
 
 

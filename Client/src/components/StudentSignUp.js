@@ -7,13 +7,11 @@ class StudentSignUp extends React.Component{
     constructor(){
         super();
         this.state ={
+
+            course:[],
+
             next:false,
             
-            mongodb:false,
-            expressjs:false,
-            reactjs:false,
-            nodejs:false,
-
             email:'',
             name:'',
             password:'',
@@ -22,56 +20,56 @@ class StudentSignUp extends React.Component{
         }
     }
 
-    handleChangeCheck = (e) =>{
+    textToUpperCase = (e) => {
+        //To convert first letter of everyword to Upper Case
+        let str = e.target.value.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
 
-        let value = e.target.value;
-        console.log('****',value)
-        switch(value){
-            case 'mongodb':
-                if(this.state.mongodb){
-                    this.setState({mongodb:false});
-                }else this.setState({mongodb:true});
-                break;
-            case 'expressjs':
-                if(this.state.expressjs){
-                    this.setState({expressjs:false});
-                }else this.setState({expressjs:true});
-                break;
-            case 'reactjs':
-                if(this.state.reactjs){
-                    this.setState({reactjs:false});
-                }else this.setState({reactjs:true});
-                break;
-            case 'nodejs':
-                if(this.state.nodejs){
-                    this.setState({nodejs:false});
-                }else this.setState({nodejs:true});
-                break;
-            default:
-                break;
+        return str;
+
+   }
+
+    handleChangeCheck = (e) =>{ //selecting subject student want to enroll in
+
+        if(this.state.subject.indexOf(e.target.value)!=-1){
+        console.log('if')
+
+            let index = this.state.subject.indexOf(e.target.value);
+            this.setState({ 
+                subject: [...this.state.subject.slice(0,index), ...this.state.subject.slice(index+1)]
+              });
+        }else {
+        console.log('else')
+
+            this.setState({subject:[...this.state.subject, e.target.value]})
         }
+
        
-        
     }
-    handleNext = () =>{
+
+
+    handleNext = () =>{ //take to next form of sign up (fill subject)
         if(this.state.next){
             this.setState({next:false})
         }else this.setState({next:true})
-
-
     }
     
+
+    //------setting up the input to the state
     setEmail= (e) =>{
         this.setState({
             email:e.target.value
         });
     }
     setName = (e) =>{
+
+        let str = this.textToUpperCase(e);
         this.setState({
-            name:e.target.value
+            name:str
         });
     }
-
     setPassword = (e) =>{
         this.setState({
             password:e.target.value
@@ -82,53 +80,10 @@ class StudentSignUp extends React.Component{
             confirm_password:e.target.value
         });
     }
-    setSubject = () =>{
 
-        var arr = [];
-        if(this.state.mongodb) {
-            arr.push('MongoDB')
-        }
-        if(this.state.expressjs) {
-            arr.push('ExpressJS')
-        }
-        if(this.state.reactjs) {
-           arr.push('ReactJS')
-        }
-        if(this.state.nodejs) {
-           arr.push('Nodejs')
-        }
-
-        this.setState({subject:arr})
-
-
-    }
-
-    signUp = () =>{
-
-        
-
-    //     Axios.post('http://localhost:8080/student/createsa',{
-    //         name:this.state.name,
-    //         email:this.state.email,
-
-    //         password:this.state.password,
-    //         confirmed_password:this.state.password
-
-    //       })
-    //       .then(function (response) {
-    //         console.log(response);
-    //       })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-
-        
+    signUp = () =>{        
         Axios({
             method: "POST",
-            // headers:{
-            //     'Content-Type':'application/json;charset=UTF-8',
-            //     "Access-Control-Allow-Origin":"*"
-            // },
             data: {
               name:this.state.name,
               email:this.state.email,
@@ -137,7 +92,6 @@ class StudentSignUp extends React.Component{
               confirmed_password:this.state.confirm_password
 
             },
-            // withCredentials: true,
             url: "http://localhost:8000/student/create",
           }).then((res)=>{
               console.log(res.data);
@@ -146,13 +100,25 @@ class StudentSignUp extends React.Component{
           
     }
 
+    componentDidMount(){
+
+        Axios({
+            method: "GET",
+            url: "http://localhost:8000/student/get-courses",
+        })
+        .then((res)=>{
+            console.log('--------',res.data);
+
+            res.data.map((item,index)=>(
+                this.setState({course:[...this.state.course,item.subject]})
+            ));
+            
+        
+        }).catch((error)=>{console.log(error)});
+    }
+
     render(){
-        console.log(this.state.mongodb, 'mo');
-
-        console.log(this.state.subject);
-
-
-
+        
         let input;
         if(!this.state.next){
             input = <form>
@@ -165,22 +131,14 @@ class StudentSignUp extends React.Component{
         }else{
             input = <form>
 
-                <label> MongoDB
-                    <input type="checkbox" defaultChecked={this.state.mongodb} value='mongodb' onChange={this.handleChangeCheck} />
-                </label>
+                {this.state.course.map((item,index)=>(
+                    <label key={index}> {item}
+                        <input type="checkbox"  value={item} onChange={this.handleChangeCheck} />
+                    </label>
+                ))}
+                
 
-                <label>  ExpressJS
-                    <input type="checkbox" defaultChecked={this.state.expressjs} value='expressjs' onChange={this.handleChangeCheck} />
-                </label>
-
-                <label> ReactJS
-                    <input type="checkbox" defaultChecked={this.state.reactjs} value='reactjs' onChange={this.handleChangeCheck} />
-                </label>
-
-                <label> NodeJS
-                    <input type="checkbox" defaultChecked={this.state.nodejs} value='nodejs' onChange={this.handleChangeCheck} />
-                </label>
-                <input type='button' value='lock submission' onClick={this.setSubject}/>
+                
 
                 <input type='button' value='prev' onClick={this.handleNext}/>
                 <input type='button' value='sign-up' onClick={this.signUp}/>

@@ -1,0 +1,14 @@
+.teacher-post{
+
+}
+
+.teacher-post form{
+    background-color: cadetblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 20px;
+    height: 200px;
+    width: 400px;
+}
+
