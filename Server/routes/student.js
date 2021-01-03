@@ -24,7 +24,9 @@ router.get('/get-user',passport.checkAuthentication,studentController.getUser);
 router.get('/sign-in-error',studentController.loginError);
 
 router.get('/assignments/:subject',passport.checkAuthentication,studentController.getAssignment)
-router.post('/submit-assignment/',passport.checkAuthentication,studentController.submitAssignment);
+router.post('/submit-assignment/',
+    passport.checkAuthentication,
+    studentController.submitAssignment);
 
 
 

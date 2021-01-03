@@ -16,7 +16,10 @@ const assignmentSchema = new mongoose.Schema({
     deadline:{
         type:Date,
     },
-    student:Array
+    students:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Student'
+    }]
 
     
 },{

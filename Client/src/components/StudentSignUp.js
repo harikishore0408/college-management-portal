@@ -8,7 +8,7 @@ class StudentSignUp extends React.Component{
         super();
         this.state ={
 
-            course:[],
+            all_course:[],
 
             next:false,
             
@@ -16,7 +16,7 @@ class StudentSignUp extends React.Component{
             name:'',
             password:'',
             confirm_Password:'',
-            subject:[]
+            courses:[]
         }
     }
 
@@ -31,26 +31,26 @@ class StudentSignUp extends React.Component{
 
    }
 
-    handleChangeCheck = (e) =>{ //selecting subject student want to enroll in
+    handleChangeCheck = (e) =>{ //selecting courses student want to enroll in
 
-        if(this.state.subject.indexOf(e.target.value)!=-1){
+        if(this.state.courses.indexOf(e.target.value)!=-1){
         console.log('if')
 
-            let index = this.state.subject.indexOf(e.target.value);
+            let index = this.state.courses.indexOf(e.target.value);
             this.setState({ 
-                subject: [...this.state.subject.slice(0,index), ...this.state.subject.slice(index+1)]
+                courses: [...this.state.courses.slice(0,index), ...this.state.courses.slice(index+1)]
               });
         }else {
         console.log('else')
 
-            this.setState({subject:[...this.state.subject, e.target.value]})
+            this.setState({courses:[...this.state.courses, e.target.value]})
         }
 
        
     }
 
 
-    handleNext = () =>{ //take to next form of sign up (fill subject)
+    handleNext = () =>{ //take to next form of sign up (fill courses)
         if(this.state.next){
             this.setState({next:false})
         }else this.setState({next:true})
@@ -87,7 +87,7 @@ class StudentSignUp extends React.Component{
             data: {
               name:this.state.name,
               email:this.state.email,
-              subject:this.state.subject,
+              courses:this.state.courses,
               password:this.state.password,
               confirmed_password:this.state.confirm_password
 
@@ -110,7 +110,7 @@ class StudentSignUp extends React.Component{
             console.log('--------',res.data);
 
             res.data.map((item,index)=>(
-                this.setState({course:[...this.state.course,item.subject]})
+                this.setState({all_course:[...this.state.all_course,item.subject]})
             ));
             
         
@@ -118,7 +118,7 @@ class StudentSignUp extends React.Component{
     }
 
     render(){
-        
+        console.log('---helo---',this.state)
         let input;
         if(!this.state.next){
             input = <form>
@@ -131,7 +131,7 @@ class StudentSignUp extends React.Component{
         }else{
             input = <form>
 
-                {this.state.course.map((item,index)=>(
+                {this.state.all_course.map((item,index)=>(
                     <label key={index}> {item}
                         <input type="checkbox"  value={item} onChange={this.handleChangeCheck} />
                     </label>

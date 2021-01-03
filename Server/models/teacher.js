@@ -15,7 +15,7 @@ const teacherSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    subject:{
+    course:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Cousre'
     },

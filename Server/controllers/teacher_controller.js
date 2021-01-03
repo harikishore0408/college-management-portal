@@ -51,6 +51,7 @@ module.exports.getUser = function(req,res){
 
 
 module.exports.create = function(req,res) {
+    console.log(req.body,'-------',req.body.course);
         
 
     //if password and confirm password do not match
@@ -82,7 +83,7 @@ module.exports.create = function(req,res) {
                     Course.create({subject:req.body.subject},function(err,course){
                         console.log('creating course')
                         if(err){
-                            console.log('error in creating subject');
+                            console.log('error in creating course');
                             res.send('error in adding course');
                         }
                         console.log('course created',course)
@@ -90,7 +91,7 @@ module.exports.create = function(req,res) {
                             email:req.body.email,
                             password:req.body.password,
                             name:req.body.name,
-                            subject:course._id,
+                            course:course._id,
                         },function(err,teacher){
                             console.log('creating teacher after creating course')
                             if(err){res.send('error in creating the error')}
@@ -109,9 +110,10 @@ module.exports.create = function(req,res) {
                     email:req.body.email,
                     password:req.body.password,
                     name:req.body.name,
-                    subject:course,
+                    course:course._id,
                 },function(err,teacher){
                     console.log('creating teacher as course is there')
+                    console.log(teacher);
 
                     if(err){res.send('error in creating the error')}
                     res.json({
@@ -133,7 +135,7 @@ module.exports.create = function(req,res) {
 }
 
 module.exports.getCourse = function(req,res){
-    Course.findById(res.locals.user.subject,function(err,course){
+    Course.findById(res.locals.user.course,function(err,course){
         if(err){return res.send('no course found')}
         res.json(course);
     });
@@ -142,7 +144,7 @@ module.exports.getCourse = function(req,res){
 }
 
 module.exports.addTopic = function(req,res){
-    Course.findByIdAndUpdate(res.locals.user.subject,{$push:{topics:req.params.topic}},function(err,course){
+    Course.findByIdAndUpdate(res.locals.user.course,{$push:{topics:req.params.topic}},function(err,course){
         if(err){return res.send('error in adding topics');}
         console.log('adding topic',course);
         res.json(course);
@@ -152,8 +154,7 @@ module.exports.addTopic = function(req,res){
 
 module.exports.addAssignment = function(req,res){
 
-    req.body.subject = res.locals.user.subject;
-    console.log('adding assignment', req.body);
+    req.body.subject = res.locals.user.course.subject;
     Assignment.create(req.body,function(err,doc){
 
         if(err){return res.send('error in adding assignment')}
@@ -171,20 +172,26 @@ module.exports.addAssignment = function(req,res){
 module.exports.assignmentList = function(req,res){
 
     Assignment.find({ 
-        subject:res.locals.user.subject  //all the similar subject assignment of same teacher
+        subject:res.locals.user.course.subject  //all the similar subject assignment of same teacher
         },function(err,assignments){
             if(err){return res.send('Error in finding the assignment list')}
             res.json(assignments)
     })
 }
 
-module.exports.getStudent = function(req,res){
-
-    Student.find({subject:res.locals.user.subject},function(err,students){
+module.exports.getStudents = function(req,res){
+    
+    Student.find({
+        courses: { $in: [res.locals.user.course.subject] }
+    },function(err,students){
         if(err){
             res.send('error in finding student')
         }
+
+        console.log('-------',students,'--GETTING--')
         res.json(students)
-    })
+    });
+    
+
     
 }

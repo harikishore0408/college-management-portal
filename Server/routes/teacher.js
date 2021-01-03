@@ -17,7 +17,7 @@ router.get('/sign-in-error',teacherController.loginError);
 
 router.post('/add-assignment',passport.checkAuthentication,teacherController.addAssignment);
 router.get('/assignment-list',passport.checkAuthentication,teacherController.assignmentList);
-router.get('/get-students',passport.checkAuthentication,teacherController.getStudent);
+router.get('/get-students',passport.checkAuthentication,teacherController.getStudents);
 // router.get('/get-assignments',passport.checkAuthentication,teacherController.getAssignments);
 
 router.get('/get-course',passport.checkAuthentication,teacherController.getCourse);

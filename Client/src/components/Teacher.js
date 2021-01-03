@@ -85,6 +85,8 @@ class Teacher extends React.Component{
                     updateAssignment={this.updateAssignment}
                     
                 />
+
+
                 <StudentSection/>
 
             </div>

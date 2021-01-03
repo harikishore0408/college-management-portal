@@ -1,6 +1,9 @@
 const Student = require('../models/student');
+const Teacher = require('../models/teacher');
+
 const Assignment = require('../models/assignment');
 const Cousre = require('../models/course');
+const { populate } = require('../models/student');
 
 
 module.exports.login = function(req,res){
@@ -39,32 +42,88 @@ module.exports.loginError = function(req,res){
 }
 
 module.exports.getAssignment = function(req,res){
-    Assignment.find({subject:req.params.subject},function(err,assignments){
+
+    Assignment.find({
+        subject:req.params.subject
+    },function(err,assignments){
         if(err){res.send('error in finding the assignmnet')}
-        console.log(assignments,'*********');
         res.json(assignments);
     })
 }
 
-module.exports.submitAssignment = function(req,res){
+module.exports.submitAssignment = async function(req,res){
 
-console.log(req.query.id,'***id')
-console.log(req.query.student, '***std')
+    console.log(req.query.id,'***id')
+    console.log(req.query.student, '***std')
+    console.log(req.document)
+    console.log(req.assignment_id)
+    console.log(res.locals.user.id,'--',res.locals.user.name)
+    
+    try{
 
-    Assignment.findByIdAndUpdate(req.query.id,{ '$push':{student:req.query.student}},function(err,assigment){
-        console.log('submit assigment controller')
-        if(err){console.log(err)}
-        console.log(assigment)
+        let student = await Student.findById(res.locals.user.id)
+        Student.uploadedDocument(req,res,function(err){
 
-    })
+            Assignment.findByIdAndUpdate(req.query.id,{
+                $push:{students:res.locals.user.id}
+                },function(err,assignment){
+                    console.log(res.locals.user.id,'---inside assign--');
+
+                    console.log(assignment,'---atudent added for submitted assign')
+            })
+
+            if(err){
+                return res.json({
+                    status:false,
+                    message:"error in uploading assignment"
+                })
+                console.log('error in document upload');
+            }
+            
+            let path
+            if(req.file){
+                path = Student.documentPath +'/'+req.file.filename;
+            }
+            student.log.push(
+                {
+                   assignment: req.query.id,
+                   document:path,
+                   grade:-1
+                }
+            )
+
+            
+
+            console.log(student);
+            student.save();
+        })
+
+        return res.json({
+            status:true,
+            message:'Assignment Submitted'
+        })
 
 
-    // Assignment.findById(req.query.id,function(err,assigment){
-    //     console.log('submit assigment controller')
-    //     if(err){console.log(err)}
-    //     console.log(assigment)
+        // Student.findById(res.locals.user.id).populate({
+        //     path:'log',
+        //     populate:{
+        //         path:'assignment'
+        //     }
+        // }).exec(function(err,student){
+        //     if(err){ console.log('erererer')}
+        //     console.log(student.log);
+        // })
 
-    // })
+    }catch(err){
+        console.log(err);
+        return res.json({
+            status:false,
+            message:'Assignment Submitted'
+        })
+    }
+
+
+    
     
 }
 
@@ -99,35 +158,12 @@ module.exports.create = function(req,res) {
         })
         return;
     }
+    console.log('req.body');
 
+    console.log(req.body);
 
     Student.findOne({email:req.body.email},function(err,student){
-    // if(err){res.send("error in creating the user");}
-    //    const { name,email,  password,  confirmed_password} = req.body;
-    //    console.log('line one')
-    //     if (err) {
-    //         console.log('User.js post error: ', err)
-    //     } else if (student) {
-    //         console.log('line two')
-    //         res.json({
-    //             error: `Sorry, already a user with the username: ${name}`
-    //         })
-    //     }
-    //     else {
-    //         console.log('line three')
-    //         const newStudent = new Student({
-    //             name: name,
-    //             email: email,
-    //             password: password,
-    //         })
-    //         newStudent.save((err, savedStudent) => {
-    //             if (err)  {
-    //                 console.log('line four')
-    //                 res.json(err)
-    //             }
-    //             res.json(savedStudent)
-    //         })
-    //     }
+  
 
         console.log(student)
         if(!student){

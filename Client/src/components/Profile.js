@@ -15,8 +15,8 @@ class Profile extends React.Component{
     render(){
         return(
             <div className='profile'>
-                <Teacher/>
-                {/* <Student/> */}
+                {/* <Teacher/> */}
+                <Student/>
               
             </div>
         );

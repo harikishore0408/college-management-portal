@@ -15,8 +15,8 @@ class App extends React.Component {
       <div className="app">
         <Header/>
         <div className='app-main'>
-          <Login/>
-          {/* <Profile/> */}
+          {/* <Login/> */}
+          <Profile/>
         </div>
         <Footer/>
 

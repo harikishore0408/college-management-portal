@@ -39,13 +39,22 @@ passport.use(new LocalStrategy({
 },
 function(email, password, done){
     // find a user and establish the identity
-    Student.findOne({ email : email }, function(err, user) {
+    Student.findOne({ email : email }).populate({
+            path:'log',
+            populate:{
+                path:'assignment'
+            }
+        }).exec( function(err, user) {
         // first method succeeded?
+        console.log('----------')
+
+        console.log(user.log)
+
         if (!err && user && user.password == password ){
           return done(null, user);
         }
         // no, try second method:
-        Teacher.findOne({ email : email }, function(err, user) {
+        Teacher.findOne({ email : email }).populate('course').exec(function(err, user) {
           // second method succeeded?
           if (! err && user && user.password == password) {
             return done(null, user);
@@ -77,7 +86,9 @@ passport.serializeUser(function(user, done){
 passport.deserializeUser(function(user, done){
 
     if(user.type=='teacher'){
-        Teacher.findById(user.id, function(err, user){
+        Teacher.findById(user.id)
+        .populate('course')
+        .exec( function(err, user){
             if(err){
                 console.log('Error in finding user --> Passport');
                 return done(err);
