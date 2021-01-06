@@ -12,7 +12,8 @@
 }
 
 #home{
-    background-color: azure;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
     margin: 10px;
     color: azure;
 }

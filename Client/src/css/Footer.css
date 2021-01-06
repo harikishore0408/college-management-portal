@@ -1,9 +1,16 @@
 .footer{
+    display: flex;
+    justify-content: left;
+    align-items: center;
     position: fixed;
     bottom: 0;
     background-color: rgb(53, 49, 49);
     color: white;
-    height: 100px;
+    height: 40px;
     width: 100%;
     text-align: center;
+}
+
+.footer p{
+    margin: 0 10px;
 }

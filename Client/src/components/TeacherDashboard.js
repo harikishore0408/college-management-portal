@@ -43,12 +43,11 @@ class TeacherDashboard extends React.Component{
             
             <div className='teacher-dashboard'>
                 
-                <h2>Dashboard</h2>
+                <h2>{this.props.course.subject}</h2>
 
-                {this.props.course.subject}
                 <form>
                     <input type='text' onChange={this.setTopic} name='topic' placeholder='Create topic' />
-                    <input type='button' onClick={this.addTopic} value='add topic'/>
+                    <input type='button' onClick={this.addTopic} value='Add Topic'/>
                 </form>
                {this.props.course.topics ? this.props.course.topics.map((item,index)=> (
                    <div className="topic-container" key={index}>

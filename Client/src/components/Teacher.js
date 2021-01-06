@@ -13,6 +13,7 @@ class Teacher extends React.Component{
         this.state = {
             assignments:[],
             course:{},
+            students:[{}]
 
         }
     }
@@ -34,7 +35,7 @@ class Teacher extends React.Component{
         .catch((err)=>{console.log(err)});
     }
 
-    getAssignmnet = () =>{
+    getAssignmnets = () =>{
         Axios({
             method:'GET',
             url:'http://localhost:8000/teacher/assignment-list',
@@ -47,11 +48,27 @@ class Teacher extends React.Component{
         .catch((err)=>{console.log(err)});
     }
 
+    getStudents = () =>{
+        Axios({
+            method:"GET",
+            url:'http://localhost:8000/teacher/get-students',
+            withCredentials:true
+        })
+        .then((res)=>{
+            console.log('-----getting Student---',res);
+            this.setState({students:res.data});
+      
+      }).catch((error)=>{console.log(error)});
+    }
+
     updateCourse = () =>{
         this.getCourse();
     }
     updateAssignment = () =>{
-        this.getAssignmnet();
+        this.getAssignmnets();
+    }
+    updateStudent = () =>{
+        this.getStudents();
     }
 
    
@@ -59,14 +76,16 @@ class Teacher extends React.Component{
 
     componentDidMount(){
         this.getCourse();
-        this.getAssignmnet();
+        this.getAssignmnets();
+        this.getStudents();
 
     }
        
 
     render(){
 
-        console.log('assignment state-----',this.state.assignments)
+        // console.log('---------main assignment statate-----',this.state.assignments);
+
         return(
             <div className='teacher'>
                 
@@ -74,6 +93,7 @@ class Teacher extends React.Component{
 
 
                 {/* course will get update from adding topics in TeacherDashboard Component */}
+
                 <TeacherDashboard 
                     course={this.state.course}
                     updateCourse={this.updateCourse}
@@ -87,7 +107,11 @@ class Teacher extends React.Component{
                 />
 
 
-                <StudentSection/>
+                <StudentSection
+                    updateStudent={this.updateStudent}
+                    students={this.state.students}
+                    assignments={this.state.assignments}
+                />
 
             </div>
             

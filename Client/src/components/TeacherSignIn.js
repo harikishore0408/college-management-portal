@@ -32,7 +32,11 @@ class TeacherSignIn extends React.Component{
             },
             withCredentials: true,
             url: "http://localhost:8000/teacher/login",
-          }).then((res) => console.log(res.data))
+          }).then((res) => {
+              console.log(res.data);
+              if(res.data.status)
+            this.props.getUser();
+            })
           .catch((error)=>{console.log(error)});;
     }
     render(){

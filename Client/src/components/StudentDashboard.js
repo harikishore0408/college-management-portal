@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import '../css/StudentDashboard.css'
 
 
 
@@ -59,6 +60,7 @@ class StudentDashboard extends React.Component{
 
     setCurrentSubject  = (e) => {
         let subject  = e.target.value;
+
         this.setState({current_subject:subject},() => this.getAssignment());
         
     }
@@ -131,65 +133,77 @@ class StudentDashboard extends React.Component{
 
     }
 
-    setAllSubmittedAssignmentDetail = (e) =>{
-
-        let grades= {}
-        this.state.logs.forEach(log => {
-            let id = log._id;
-            let grade = log.grade
-            grades[id] = grade
-        });
-        
-        Promise.all(grades).then(this.setState({assigment_grades:grades}));
-        console.log(this.state.assigment_grades);
-
-
-        
-    }
     
     
 
 
     
     render(){
-            console.log(this.state.submitted,'----',this.state.remaining)
+         
+
+            let obj= {}
+            this.state.logs.forEach(log => {
+                let id = log.assignment;
+                let grade = log.grade
+    
+                obj[id] = grade
+            });
+
+
+
             return(
             <div className='student-dashboard'>
-                <h2>StudentDashboard</h2>
-                <button onClick={this.setAllSubmittedAssignmentDetail}>Assignment Details</button>
+                {/* <button onClick={this.setAllSubmittedAssignmentDetail}>Assignment Details</button> */}
+
+                
 
                 <h1>{this.state.name}</h1>
-                <ul>
-                    {this.state.subject.map((subject,index)=>(<li key={index}>
-                        <span>{subject}</span>
+                <div className='subject'>
+                    {this.state.subject.map((subject,index)=>(
+                        
 
-                        <button value={subject} onClick={this.setCurrentSubject}>Get Assignment</button>
-                        </li>))}
+                        <button
+                            className="subject-tab" 
+                            key={index} value={subject} 
+                            onClick={this.setCurrentSubject}>{subject}</button>
+                        ))}
 
-                </ul>
-
-                <div>
+                </div>
+                <h2>{this.state.current_subject}</h2>
+                <div className='student-assignment-section'>
+                    
+                    
                     <div>
-                        <h3>Submitted Assignment</h3>
-                        <ul>
-                            {this.state.submitted.map((assigment,index)=>(<li key={index}>
-                            <p>{assigment.content}</p>
-                            <small></small>
+                        <h3>
+
+                        {this.state.current_subject!==''&&this.state.remaining.length===0?"No assignmnent Remaining":'Remaining Assignment'}
+
+                        </h3>
+                        
+                            <ul>
+                            {this.state.remaining.map((assigment,index)=>(<li key={index}>
+                            <h1>{assigment.content}</h1>
+
+
+                                <input  name={assigment._id} type="file"  onChange= {this.setFile} />
+                                <button value={assigment._id} onClick={this.submitAssignment}>Submit Assignment</button>
+
                             </li>))}
                         </ul>
                         
                     </div>
+
                     <div>
-                        <h3>Remaining Assignment</h3>
+                        <h3>
+                        {this.state.submitted.length===0?"No assignmnent Submitted yet":'Submitted Assignment'}
+
+                        </h3>
                         <ul>
-                            {this.state.remaining.map((assigment,index)=>(<li key={index}>
-                            <p>{assigment.content}</p>
 
+                            {this.state.submitted.map((assigment,index)=>(<li key={index}>
+                            <span>{assigment.content} </span>
 
-                                <h1>File Upload</h1>
-                                <input  name={assigment._id} type="file"  onChange= {this.setFile} />
-                                <button value={assigment._id} onClick={this.submitAssignment}>Submit Assignment</button>
-
+                            <small className='grade'>{obj[assigment._id]==-1?' Not Reviewed':'Socre: '+obj[assigment._id]}</small>
                             </li>))}
                         </ul>
                         

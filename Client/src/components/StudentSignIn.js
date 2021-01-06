@@ -21,6 +21,9 @@ class StudentSignIn extends React.Component{
             password:e.target.value
         });
     }
+
+  
+
     login= () =>{
         Axios({
             method: "POST",
@@ -30,9 +33,18 @@ class StudentSignIn extends React.Component{
             },
             withCredentials: true,
             url: "http://localhost:8000/student/login",
-          }).then((res) => console.log(res.data))
+          }).then(
+              (res) => {
+                  console.log(res.data)
+              if(res.data.status)
+
+                    this.props.getUser();
+                })
           .catch((error)=>{console.log(error)});;
     }
+
+
+    getUser
     render(){
         
         return(

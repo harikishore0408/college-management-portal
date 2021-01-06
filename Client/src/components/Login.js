@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/Login.css'
+import Axios from 'axios'
 
 import StudentSignUp from './StudentSignUp'
 import TeacherSignUp from './TeacherSignUp'
@@ -24,6 +25,20 @@ class Login extends React.Component{
 
     }
 
+    getUser = () =>{
+
+        console.log('----get---user')
+        Axios({
+            method:'GET',
+            url:'http://localhost:8000/user/get-user',
+            withCredentials:true
+        }).then((res)=>{
+            console.log(res)
+            console.log('signed in as ',res.data.profile);
+            this.props.setLoginState(true,res.data.profile,res.data.name);
+        });
+    }
+
     render(){
         return(
             <div className='login'>
@@ -44,8 +59,8 @@ class Login extends React.Component{
                 <div className='sign-in'>
                     <h1>Sign In</h1>
                     <div id='sign-in-container'>
-                        <StudentSignIn/>
-                        <TeacherSignIn/>
+                        <StudentSignIn getUser={this.getUser}  />
+                        <TeacherSignIn getUser={this.getUser}  />
                     </div>
                    
                 </div>

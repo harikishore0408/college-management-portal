@@ -1,7 +1,16 @@
-.teacher-post{
+.teacher-post .assignment-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
 }
+.teacher-post .assignment-container>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:0 5px;
 
+}
 .teacher-post form{
     background-color: cadetblue;
     display: flex;

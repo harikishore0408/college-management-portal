@@ -1,6 +1,6 @@
 import React from 'react';
-import Axios from 'axios';
 import StudentDashboard from './StudentDashboard'
+import '../css/Student.css'
 
 
 
@@ -15,7 +15,6 @@ class Student extends React.Component{
     render(){
         return(
             <div className='student'>
-                <h2>Student profile</h2>
                 <StudentDashboard/>
             </div>
         );

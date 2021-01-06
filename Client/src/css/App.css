@@ -12,12 +12,11 @@
 
 
 .app-main{
-   /* background-color: turquoise; */
    position: absolute;
    top:80px;
-   /* z-index: ; */
-   padding-bottom: 50px;
-   /* border: 4px solid green; */
+   
    max-height: 800px ;
    width:100%
 }
+
+

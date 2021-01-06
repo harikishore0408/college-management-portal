@@ -1,14 +1,15 @@
 const Teacher = require('../models/teacher');
 const Student = require('../models/student');
-const Course = require('../models/course')
-const Assignment = require('../models/assignment')
+const Course = require('../models/course');
+const Assignment = require('../models/assignment');
+
+const fs = require('fs');
 
 module.exports.login = function(req,res){
         
             res.json({
                 status:true,
                 message:'Signed in succesfully',
-                name:res.locals.user.name
             })
     
 }
@@ -155,6 +156,7 @@ module.exports.addTopic = function(req,res){
 module.exports.addAssignment = function(req,res){
 
     req.body.subject = res.locals.user.course.subject;
+    console.log('---req.body add assignment--',req.body)
     Assignment.create(req.body,function(err,doc){
 
         if(err){return res.send('error in adding assignment')}
@@ -166,6 +168,39 @@ module.exports.addAssignment = function(req,res){
 
 
     })
+    
+}
+
+module.exports.getDocument = function (req,res){
+    console.log('geting file----_***********')
+    console.log(req.query.path,'--path');
+    // var file = fs.createReadStream('./uploads/student/documents/document-1609679883690');
+    var file = fs.createReadStream('.'+req.query.path);
+
+    file.pipe(res);
+}
+
+module.exports.giveGrades = function(req,res){
+    console.log('-------giveGrades function is executing--------')
+    console.log(req.query.id);
+    console.log(req.query.grade);
+    console.log(req.body.student);
+
+    Student.findOneAndUpdate({'log._id':req.query.id},{'$set':{
+            'log.$.grade': req.query.grade
+        }},function(err,student){
+            
+            if(err){return res.send('error in grading')}
+            res.json({
+                status:true,
+                message:'Evaluated'
+             } )
+
+
+            
+    })
+
+
 
 }
 
@@ -175,9 +210,12 @@ module.exports.assignmentList = function(req,res){
         subject:res.locals.user.course.subject  //all the similar subject assignment of same teacher
         },function(err,assignments){
             if(err){return res.send('Error in finding the assignment list')}
+            // console.log('----assignments----',assignments)
             res.json(assignments)
     })
 }
+
+
 
 module.exports.getStudents = function(req,res){
     
@@ -188,7 +226,7 @@ module.exports.getStudents = function(req,res){
             res.send('error in finding student')
         }
 
-        console.log('-------',students,'--GETTING--')
+        // console.log('-------',students,'--GETTING--')
         res.json(students)
     });
     

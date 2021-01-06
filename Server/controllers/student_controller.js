@@ -8,11 +8,13 @@ const { populate } = require('../models/student');
 
 module.exports.login = function(req,res){
 
-            res.json({
-                status:true,
-                message:'Signed in succesfully',
-                name:res.locals.user.name
-            })
+            
+            return res.json({
+                 status:true,
+                 message:'Signed in succesfully',
+                //  name:res.locals.user.name
+             })
+  
     
 }
 
@@ -73,11 +75,11 @@ module.exports.submitAssignment = async function(req,res){
             })
 
             if(err){
+                console.log('error in document upload');
                 return res.json({
                     status:false,
                     message:"error in uploading assignment"
                 })
-                console.log('error in document upload');
             }
             
             let path
@@ -126,6 +128,8 @@ module.exports.submitAssignment = async function(req,res){
     
     
 }
+
+module.exports.assignmentsDetail
 
 module.exports.getUser = function(req,res){
     

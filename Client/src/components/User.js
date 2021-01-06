@@ -23,6 +23,19 @@ class User extends React.Component{
         
     }
 
+    logout = ()=>{
+        Axios({
+            method:'GET',
+            url:'http://localhost:8000/user/logout',
+            withCredentials:true
+            
+        }).then((res)=>{
+            console.log(res);
+            this.props.setLoginState(false,'')
+        }).catch(err=>console.log(err));
+      
+    }
+
     getUser = () =>{
         Axios({
             method:'GET',
@@ -39,6 +52,7 @@ class User extends React.Component{
             <div className='user'>
                 <h3>{this.state.user}</h3>
                 <button onClick={this.getUser}>Get user</button>
+                <button onClick={this.logout}>Logout</button>
             </div>
         );
     }

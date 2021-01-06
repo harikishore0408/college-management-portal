@@ -107,7 +107,6 @@ class StudentSignUp extends React.Component{
             url: "http://localhost:8000/student/get-courses",
         })
         .then((res)=>{
-            console.log('--------',res.data);
 
             res.data.map((item,index)=>(
                 this.setState({all_course:[...this.state.all_course,item.subject]})
@@ -118,7 +117,6 @@ class StudentSignUp extends React.Component{
     }
 
     render(){
-        console.log('---helo---',this.state)
         let input;
         if(!this.state.next){
             input = <form>

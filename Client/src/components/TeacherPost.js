@@ -69,7 +69,7 @@ class TeacherPost extends React.Component{
                         
                     
                     <textarea name='content' rows='4' placeholder="enter question" onChange={this.setContent} required></textarea>
-                    <input type='date' name='deadline' onChange={this.setDeadline} />
+                    <input type='date' name='deadline' onChange={this.setDeadline} required/>
                     <input type='button' value='post' onClick={this.addAssignment}/>
                 </form>
 
@@ -78,9 +78,9 @@ class TeacherPost extends React.Component{
                     {this.props.assignments.length ? 
                         this.props.assignments.map((item,index) => (<div key={index}>
                            <p> {item.content}</p>
-                           <small>{item.deadline}</small>
+                           <small>{item.deadline.slice(0,10)}</small>
                         </div>)) : 
-                        <div >No Assignment</div>}
+                        <div >No Assignment Given</div>}
                         
                 </div>
                

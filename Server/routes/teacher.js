@@ -23,6 +23,10 @@ router.get('/get-students',passport.checkAuthentication,teacherController.getStu
 router.get('/get-course',passport.checkAuthentication,teacherController.getCourse);
 router.post('/add-topic/:topic',passport.checkAuthentication,teacherController.addTopic);
 
+router.get('/get-file',passport.checkAuthentication,teacherController.getDocument);
+router.post('/give-grades',passport.checkAuthentication,teacherController.giveGrades);
+
+
 
 
 
