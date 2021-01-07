@@ -17,20 +17,18 @@
     * passport
     * passport-local
     * nodemon
-    
- to start the server   > npm start
+- to start the server > npm start
 
-#### server location 
-> http://localhost:8000
+- server location > http://localhost:8000
 
 ### For client side
-do > create-react-app my_app
+- do > create-react-app my_app
 - Clone the client folder and install the following depedencies
      * axios
   
-  to fire up react app > npm start
+- to fire up react app > npm start
   
-  #### server location 
+- server location 
 > http://localhost:3000
      
 
