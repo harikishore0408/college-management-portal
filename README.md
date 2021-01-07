@@ -5,10 +5,10 @@
 
 ## SetUp
 ### For server side </br>
-Clone the server folder which has the following dependecies
-    *body-parser
-    *express
-    *connect-mongo
+- Clone the server folder which has the following dependecies
+    * body-parser
+    * express
+    * connect-mongo
     * cookie-parser
     * cors
     * express-session
