@@ -1,1 +1,1 @@
-#College Managemnet Portal
+# College Managemnet Portal
