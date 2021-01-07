@@ -4,6 +4,9 @@
 **Back-End** - Node.js, Express.js & MongoDB
 
 ## SetUp
+
+### Prerequisite
+ Must have node installed
 ### For server side </br>
 - Clone the server folder and install the following dependecies
   * body-parser
@@ -23,7 +26,8 @@
   > http://localhost:8000
 
 ### For client side
-- do > create-react-app my_app
+- First create react app using command 
+  > create-react-app my_app
 - Clone the client folder and install the following depedencies
    * axios
 - to fire up react app 
