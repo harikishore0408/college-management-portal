@@ -5,7 +5,7 @@
 
 ## SetUp
 ### For server side </br>
-- Clone the server folder which has the following dependecies
+- Clone the server folder and install the following dependecies
     * body-parser
     * express
     * connect-mongo
@@ -16,3 +16,21 @@
     * multer
     * passport
     * passport-local
+    * nodemon
+    
+ to start the server   > npm start
+
+#### server location 
+> http://localhost:8000
+
+### For client side
+do > create-react-app my_app
+- Clone the client folder and install the following depedencies
+     * axios
+  
+  to fire up react app > npm start
+  
+  #### server location 
+> http://localhost:3000
+     
+
