@@ -6,7 +6,7 @@
 ## SetUp
 ### For server side </br>
 Clone the server folder which has the following dependecies
-body-parser
+    * body-parser
     * express
     * connect-mongo
     * cookie-parser
