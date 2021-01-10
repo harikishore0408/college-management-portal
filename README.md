@@ -35,4 +35,5 @@
 - server location 
   > http://localhost:3000
      
-
+### Demo Images
+<img src="https://raw.githubusercontent.com/erasedbeyond/college-management-portal/main/demo/Screenshot%20from%202021-01-06%2019-19-17.png" >
