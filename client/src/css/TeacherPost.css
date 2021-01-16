@@ -1,0 +1,72 @@
+.teacher-post{
+    width: 500px;
+    height: 100%;
+    min-width: 500px;
+    flex-grow: 2;
+    overflow: auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(163, 79, 79, 0.158);
+
+
+}
+.teacher-post form{
+    background-color: rgb(160, 95, 95);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 20px;
+    height: 200px;
+    /* visibility: hidden; */
+    width: 450px;
+}
+.teacher-post .assignment-container{
+    width: 490px;
+    /* padding-top: 120px; */
+    overflow-y:scroll;
+    position: absolute;
+
+    /* bottom: 40px; */
+    overflow-y: scroll;
+    /* height: 400px; */
+    top: 250px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+
+}
+.teacher-post .assignment-container>div{
+    
+    background-color: rgba(160, 95, 95, 0.356);
+    margin: 2px 0;
+
+    border-bottom: 2px solid rgb(170, 40, 40);
+
+}
+.teacher-post .assignment-details{
+    padding:0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.teacher-post h6{
+    font-size: 1rem;
+    color:white;
+    background-color: rgb(160, 95, 95);
+    margin: 0;
+    padding:10px ;
+    float: right;
+}
+.teacher-post h5{
+    margin:0 0;
+    padding: 0;
+    float: center;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.192);
+}
+
+
+

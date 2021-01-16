@@ -1,0 +1,24 @@
+:root {
+ --background-color: rgb(144, 195, 224);
+ --background-gradient: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,60,1) 22%, rgba(0,212,255,1) 100%);
+}
+
+.app{
+    /* background-color: var(--background-color); */
+    height: 100%;
+    width: 100%;
+    /* z-index: -2; */
+    display: flex;
+    flex-direction: column;
+}
+
+
+.app-main{
+  
+   overflow: auto;
+   max-height: 800px ;
+   width:100%;
+   flex: 1;
+}
+
+

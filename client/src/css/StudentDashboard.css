@@ -1,0 +1,63 @@
+
+.student-dashboard .subject{
+    display: flex;
+
+}
+
+.student-dashboard h2{
+    text-align: center;
+}
+
+
+
+.subject button{
+    background-color: rgb(196, 143, 140);
+    font-size: 1.3rem;
+    margin: 0 5px;
+    box-shadow: 0 0 3px 1px  rgb(196, 143, 140);
+    border-radius: 10px 10px 0px 0px;
+    border: none;
+    height: 50px;
+    width: 200px;
+    color: rgb(112, 43, 40);
+}
+.subject button:focus{
+    background-color: rgb(112, 43, 40);
+
+    box-shadow:  0 0 5px 5px  rgb(255, 255, 255);;
+    border: 1px solid rgb(196, 143, 140);
+    color: white;
+
+    outline: none;
+}
+.student-assignment-section{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+
+
+}
+
+.student-assignment-section>div{
+    width: 50%;
+    border: 1px solid gray;
+    /* text-align: center; */
+}
+.submit-assignment{
+    float: right;
+}
+.student-dashboard .grade{
+    /* margin: 10px; */
+    float: right;
+}
+.student-dashboard ul{
+    padding: 0;
+}
+.student-dashboard li{
+    list-style: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    background-color: rgba(182, 127, 127, 0.295);
+
+}

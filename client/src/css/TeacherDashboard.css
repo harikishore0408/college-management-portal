@@ -1,0 +1,25 @@
+.teacher-dashboard {
+    text-align: center;
+    height: 100%;
+    flex-grow: 1;
+    border-right:1px solid black ;
+    background-color:rgba(185, 185, 185, 0.356);
+
+}
+.teacher-dashboard form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+
+    /* flex-direction: column; */
+}
+.teacher-dashboard .topic-container{
+    background-color:rgba(185, 185, 185, 0.356);
+    text-align: justify;
+    padding: 5px;
+    border-bottom:1px solid black ;
+}
+
+
+

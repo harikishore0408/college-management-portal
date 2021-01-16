@@ -1,0 +1,14 @@
+.teacher{
+    display: flex;
+    align-items: flex-start;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    left: 0;
+    bottom: 40px;
+    overflow: auto;
+    
+}
+.teacher>div{
+
+}
