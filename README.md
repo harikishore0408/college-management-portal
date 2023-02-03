@@ -1,4 +1,4 @@
-# College Managemnet Portal (MERN Stack) App
+# College Management Portal (MERN Stack) App
 
 **Front-End** - React </br>
 **Back-End** - Node.js, Express.js & MongoDB
